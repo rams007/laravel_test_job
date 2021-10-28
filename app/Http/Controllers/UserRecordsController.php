@@ -67,11 +67,33 @@ class UserRecordsController extends Controller
 
     }
 
-    public function showRecord (UserRecord $user_record){
-
+    /**
+     * Show single record details
+     * @param UserRecord $user_record
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function showRecord(UserRecord $user_record)
+    {
         $user_record->author = User::find($user_record->user_id);
+        return view('employee_record_details', ['user_record' => $user_record]);
+    }
 
-        return view('employee_record_details',['user_record'=>$user_record]);
+    /**
+     * Get records filtered by category
+     * @param $categoryId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @todo we can merge this method with getRecords
+     */
+    public function getRecordsByCategory($categoryId)
+    {
+        $user = Auth::user();
+        if ($user->role == 'manager') {
+            $allEmployeeRecords = UserRecord::whereNotNull('image_path')->where('category_id', $categoryId)->paginate(10);
+        } else {
+            $allEmployeeRecords = UserRecord::where('user_id', $user->id)->where('category_id', $categoryId)->paginate(10);
+        }
 
+        $allCategories = Category::all(['id', 'name']);
+        return view('categories', ['allEmployeeRecords' => $allEmployeeRecords, 'allCategories' => $allCategories]);
     }
 }

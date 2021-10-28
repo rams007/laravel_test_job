@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                     <td>Category</td>
-                    <td scope="row">{{$user_record->category->name}}</td>
+                    <td scope="row"><a href="/categories/{{$record->category_id}}"> {{$user_record->category->name}} </a></td>
                 </tr>
 
                 <tr>

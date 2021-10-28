@@ -14,10 +14,6 @@ Use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
-
 Route::get('/login', function () {
     return view('login');
 })->name('login');
@@ -25,18 +21,26 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
-
 Route::post('/register', [UserController::class, 'createUser']);
+Route::post('/login', [UserController::class, 'loginUser']);
+Route::get('/logout', [UserController::class, 'logoutUser']);
 
-Route::get('/employee',  [UserController::class, 'getEmployees'] )->name('employee');
-Route::post('/employee',  [UserController::class, 'createEmployee'] );
-Route::delete('/employee/{user}',  [UserController::class, 'deleteEmployee'] );
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/categories', function () {
-    return view('categories');
-})->name('categories');
-Route::get('/employee_records', function () {
-    return view('employee_records');
-})->name('employee_records');
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
 
+    Route::get('/employee', [UserController::class, 'getEmployees'])->name('employee');
+    Route::post('/employee', [UserController::class, 'createEmployee']);
+    Route::delete('/employee/{user}', [UserController::class, 'deleteEmployee']);
+
+    Route::get('/categories', function () {
+        return view('categories');
+    })->name('categories');
+    Route::get('/employee_records', function () {
+        return view('employee_records');
+    })->name('employee_records');
+
+});

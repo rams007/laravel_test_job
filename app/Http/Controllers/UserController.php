@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\LoginUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -81,5 +83,42 @@ class UserController extends Controller
         } else {
             return response()->json(['error' => true, 'msg' => 'User not found']);
         }
+    }
+
+    /**
+     * Login users
+     * @param LoginUserRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function loginUser(LoginUserRequest $request)
+    {
+        $credentials = $request->only(['email', 'password']);
+        if (Auth::attempt($credentials)) {
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('/');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+
+    /**
+     * Log the user out of the application.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

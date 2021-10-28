@@ -31,24 +31,33 @@
                             Dashboard
                         </a>
                     </li>
-                    <li>
-                        <a class="{{ (Request::routeIs('employee') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
-                           href="/employee">
-                            Employee
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ (Request::routeIs('categories') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
-                           href="/categories">
-                            Categories
-                        </a>
-                    </li>
+                    @if( Auth::user()->role == 'manager')
+                        <li>
+                            <a class="{{ (Request::routeIs('employee') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                               href="/employee">
+                                Employee
+                            </a>
+                        </li>
+                        <li>
+                            <a class="{{ (Request::routeIs('categories') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                               href="/categories">
+                                Categories
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a class="{{ (Request::routeIs('employee_records') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
                            href="/employee_records">
                             Employee records
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link link-dark "
+                           href="/logout">
+                            Logout
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -68,7 +77,6 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="/js/sidebar.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 
 
 @yield('scripts')

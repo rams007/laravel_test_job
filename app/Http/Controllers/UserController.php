@@ -18,7 +18,6 @@ class UserController extends Controller
     public function createUser(CreateUserRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
-        print_r($credentials);
         try {
             $credentials['password'] = Hash::make($credentials['password']);
             $credentials['role'] = 'manager';
@@ -31,5 +30,56 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
 
+    }
+
+    /**
+     * Get list of all existed employees
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function getEmployees()
+    {
+        $allEmployee = User::where('role', 'employee')->get(['id', 'email']);
+        return view('employees', ['allEmployee' => $allEmployee]);
+    }
+
+
+    /**
+     * Create new emploee record
+     * @param CreateUserRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createEmployee(CreateUserRequest $request)
+    {
+        $credentials = $request->only(['email', 'password']);
+        try {
+            $credentials['password'] = Hash::make($credentials['password']);
+            $credentials['role'] = 'employee';
+            $credentials['name'] = 'John';
+            User::create($credentials);
+
+            return response()->json(['error' => false, 'msg' => 'User created']);
+        } catch (\Throwable $e) {
+            Log::error('We got error when user attemp to register ' . $e->getMessage());
+            return response()->json(['error' => true, 'msg' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete one employee
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteEmployee(User $user)
+    {
+        if ($user) {
+            if ($user->role == 'employee') {
+                $user->delete();
+                return response()->json(['error' => false, 'msg' => 'User deleted']);
+            } else {
+                return response()->json(['error' => true, 'msg' => 'We cant delete manager']);
+            }
+        } else {
+            return response()->json(['error' => true, 'msg' => 'User not found']);
+        }
     }
 }

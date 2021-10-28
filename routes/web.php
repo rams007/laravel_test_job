@@ -27,9 +27,11 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [UserController::class, 'createUser']);
-Route::get('/employee', function () {
-    return view('employees');
-})->name('employee');
+
+Route::get('/employee',  [UserController::class, 'getEmployees'] )->name('employee');
+Route::post('/employee',  [UserController::class, 'createEmployee'] );
+Route::delete('/employee/{user}',  [UserController::class, 'deleteEmployee'] );
+
 Route::get('/categories', function () {
     return view('categories');
 })->name('categories');

@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.auth')
 
 @section('content')
     <form class="form-signin" method="post">

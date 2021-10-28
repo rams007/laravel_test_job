@@ -23,12 +23,56 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
 <body>
 
-<div class="container">
-    @yield('content')
+<div class="container-fluid">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Test app</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/employee">Employee</a></li>
+                    <li><a href="/categories">Categories</a></li>
+                    <li><a href="/employee_records">Employee records</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="{{ (Request::is('/') ? 'active' : '') }}"><a href="/">Dashboard </a></li>
+                <li class="{{ (Request::is('/employee') ? 'active' : '') }}"><a href="/employee">Employee</a></li>
+                <li class="{{ (Request::is('/categories') ? 'active' : '') }}"><a href="/categories">Categories</a></li>
+                <li class="{{ (Request::is('/employee_records') ? 'active' : '') }}"><a href="/employee_records">Employee
+                        records</a></li>
+
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            @yield('content')
+        </div>
+
+    </div>
+
 </div>
 
 

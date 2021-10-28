@@ -1,5 +1,8 @@
 @extends('layout.main')
 
 @section('content')
- DAshboard content
+
+Dashboard content
+
 @endsection
+

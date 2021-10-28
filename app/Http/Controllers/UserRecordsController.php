@@ -20,10 +20,11 @@ class UserRecordsController extends Controller
     {
         $user = Auth::user();
         if ($user->role == 'manager') {
-            $allEmployeeRecords = UserRecord::all();
+            $allEmployeeRecords = UserRecord::whereNotNull('image_path')->paginate(10);
         } else {
-            $allEmployeeRecords = UserRecord::where('user_id', $user->id)->get();
+            $allEmployeeRecords = UserRecord::where('user_id', $user->id)->paginate(10);
         }
+
         $allCategories = Category::all(['id', 'name']);
         return view('employee_records', ['allEmployeeRecords' => $allEmployeeRecords, 'allCategories' => $allCategories]);
     }

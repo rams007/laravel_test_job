@@ -36,6 +36,7 @@
 
                 </tbody>
             </table>
+            {{$allEmployeeRecords->links('pagination::simple-bootstrap-4')}}
 
         </div>
     </div>
@@ -94,25 +95,25 @@
     <script>
 
 
-          function deleteRecord(recordId) {
-              console.log(recordId);
-              $.ajax({
-                  url: $(location).attr('href') + '/' + recordId,
-                  type: 'DELETE',
-                  data: {_token: $('[name=_token]').val()}
-              }).done(function (data) {
-                  console.log(data);
-                  if (data.error === false) {
-                      toastr.success(data.msg);
-                      window.location.reload();
-                  } else {
-                      toastr.warning(data.msg);
-                  }
-              }).fail(function (error) {
-                  console.log(error);
-                  toastr.warning('Problem with your request ');
-              });
-          }
+        function deleteRecord(recordId) {
+            console.log(recordId);
+            $.ajax({
+                url: $(location).attr('href') + '/' + recordId,
+                type: 'DELETE',
+                data: {_token: $('[name=_token]').val()}
+            }).done(function (data) {
+                console.log(data);
+                if (data.error === false) {
+                    toastr.success(data.msg);
+                    window.location.reload();
+                } else {
+                    toastr.warning(data.msg);
+                }
+            }).fail(function (error) {
+                console.log(error);
+                toastr.warning('Problem with your request ');
+            });
+        }
 
 
         function saveRecord() {
@@ -161,7 +162,6 @@
                 processData: false,
                 timeout: 60000
             });
-
 
 
         }

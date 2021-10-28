@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRecordRequest;
 use App\Models\Category;
+use App\Models\User;
 use App\Models\UserRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -49,6 +50,11 @@ class UserRecordsController extends Controller
         }
     }
 
+    /**
+     * Delete single record and delete saved image
+     * @param UserRecord $user_record
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteRecord(UserRecord $user_record)
     {
         if ($user_record) {
@@ -58,6 +64,14 @@ class UserRecordsController extends Controller
         } else {
             return response()->json(['error' => true, 'msg' => 'User record not found']);
         }
+
+    }
+
+    public function showRecord (UserRecord $user_record){
+
+        $user_record->author = User::find($user_record->user_id);
+
+        return view('employee_record_details',['user_record'=>$user_record]);
 
     }
 }

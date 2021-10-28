@@ -23,9 +23,10 @@
                 <tbody>
                 @foreach($allEmployeeRecords as $record)
                     <tr>
-                        <th scope="row">{{$record->id}}</th>
-                        <td>{{$record->title}}</td>
-                        <td><img style="width: 50px" src="/{{$record->image_path}}"/></td>
+                        <th scope="row"><a href="/employee_records/{{$record->id}}"> {{$record->id}} </a></th>
+                        <td><a href="/employee_records/{{$record->id}}">{{$record->title}}</a></td>
+                        <td><a href="/employee_records/{{$record->id}}"><img style="width: 50px"
+                                                                             src="/{{$record->image_path}}"/></a></td>
                         <td>{{$record->category->name}}</td>
                         <td>
                             <button class="btn btn-danger" onclick="deleteRecord({{$record->id}})"> delete</button>

@@ -1,80 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/signin/">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Test admin panel</title>
-
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/sidebar.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-
 <body>
-
-<div class="container-fluid">
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Test app</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">Dashboard</a></li>
-                    <li><a href="/employee">Employee</a></li>
-                    <li><a href="/categories">Categories</a></li>
-                    <li><a href="/employee_records">Employee records</a></li>
-
+<header>
+    <nav class="bg-dark fixed-top navbar navbar-dark navbar-expand-md">
+        <div class="container-fluid"><a class="navbar-brand" href="#">Sidebar navigation</a>
+            <button class="border-0 btn btn-link navbar-toggler" type="button" id="sidebar"
+                    aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        </div>
+    </nav>
+</header>
+<div class="d-flex wrapper wrapper-navbar-fixed wrapper-navbar-used">
+    <nav role="navigation" class="sidebar sidebar-bg-light" id="navigation">
+        <div class="sidebar-menu">
+            <div class="sidebar-menu-fixed">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li>
+                        <a class="{{ (Request::routeIs('dashboard') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                           href="/">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a class="{{ (Request::routeIs('employee') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                           href="/employee">
+                            Employee
+                        </a>
+                    </li>
+                    <li>
+                        <a class="{{ (Request::routeIs('categories') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                           href="/categories">
+                            Categories
+                        </a>
+                    </li>
+                    <li>
+                        <a class="{{ (Request::routeIs('employee_records') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                           href="/employee_records">
+                            Employee records
+                        </a>
+                    </li>
                 </ul>
-
             </div>
         </div>
     </nav>
+    <div class="container-fluid">
+        <main role="main">
 
-
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="{{ (Request::is('/') ? 'active' : '') }}"><a href="/">Dashboard </a></li>
-                <li class="{{ (Request::is('/employee') ? 'active' : '') }}"><a href="/employee">Employee</a></li>
-                <li class="{{ (Request::is('/categories') ? 'active' : '') }}"><a href="/categories">Categories</a></li>
-                <li class="{{ (Request::is('/employee_records') ? 'active' : '') }}"><a href="/employee_records">Employee
-                        records</a></li>
-
-            </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             @yield('content')
-        </div>
 
+        </main>
     </div>
-
 </div>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="/js/sidebar.js"></script>
 </body>
 </html>
+
+

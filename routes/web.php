@@ -16,7 +16,7 @@ Use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('dashboard');
-})->middleware('auth');;
+})->middleware('auth')->name('dashboard');
 
 Route::get('/login', function () {
     return view('login');
@@ -27,3 +27,14 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [UserController::class, 'createUser']);
+Route::get('/employee', function () {
+    return view('employees');
+})->name('employee');
+Route::get('/categories', function () {
+    return view('categories');
+})->name('categories');
+Route::get('/employee_records', function () {
+    return view('employee_records');
+})->name('employee_records');
+
+

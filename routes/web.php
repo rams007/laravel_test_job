@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 Use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserRecordsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/categories', function () {
         return view('categories');
     })->name('categories');
-    Route::get('/employee_records', function () {
-        return view('employee_records');
-    })->name('employee_records');
+
+    Route::get('/employee_records', [UserRecordsController::class, 'getRecords'])->name('employee_records');
+    Route::post('/employee_records', [UserRecordsController::class, 'createRecord']);
+    Route::delete('/employee_records/{user_record}', [UserRecordsController::class, 'deleteRecord']);
 
 });

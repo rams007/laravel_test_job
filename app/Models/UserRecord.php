@@ -15,4 +15,8 @@ class UserRecord extends Model
         'image_path',
         'category_id',
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

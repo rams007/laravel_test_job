@@ -7,6 +7,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -53,6 +54,7 @@ class UserController extends Controller
     public function createEmployee(CreateUserRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
+        Gate::authorize('create');
         try {
             $credentials['password'] = Hash::make($credentials['password']);
             $credentials['role'] = 'employee';

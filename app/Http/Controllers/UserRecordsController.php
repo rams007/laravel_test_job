@@ -23,7 +23,7 @@ class UserRecordsController extends Controller
         $user = Auth::user();
         if ($user->role == 'manager') {
             $allEmployeeRecords = UserRecord::whereNotNull('image_path')->leftJoin('users', 'users.id', '=', 'user_records.user_id')
-                ->where('users.manager_id', $user->id)->paginate(10);
+                ->where('users.manager_id', $user->id)->select('user_records.*')->paginate(10);
         } else {
             $allEmployeeRecords = UserRecord::where('user_id', $user->id)->paginate(10);
         }
@@ -109,7 +109,7 @@ class UserRecordsController extends Controller
         $user = Auth::user();
         if ($user->role == 'manager') {
             $allEmployeeRecords = UserRecord::whereNotNull('image_path')->leftJoin('users', 'users.id', '=', 'user_records.user_id')
-                ->where('users.manager_id', $user->id)->where('category_id', $categoryId)->paginate(10);
+                ->where('users.manager_id', $user->id)->where('category_id', $categoryId)->select('user_records.*')->paginate(10);
         } else {
             $allEmployeeRecords = UserRecord::where('user_id', $user->id)->where('category_id', $categoryId)->paginate(10);
         }

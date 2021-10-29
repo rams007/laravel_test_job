@@ -46,7 +46,7 @@ function saveRecord() {
             console.log(data);
             if (data.error === false) {
                 toastr.success(data.msg);
-                //            window.location.reload();
+                window.location.reload();
             } else {
                 toastr.warning(data.msg);
             }
@@ -87,7 +87,7 @@ function editRecord(recordId) {
             $('#recordTitle').val(data.data.title);
             $('#recordCategory').val(data.data.category_id);
             $('#recordId').val(data.data.id);
-            $('#previewImage').attr('src', '/' + data.data.image_path);
+            $('#previewImage').attr('src', '/storage/' + data.data.image_path);
 
             var myModal = new bootstrap.Modal(document.getElementById('createNewRecordModal'), {})
             myModal.show()

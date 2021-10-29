@@ -56,7 +56,7 @@ class UserController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
         $user = Auth::user();
-        Gate::authorize('create');
+        Gate::authorize('create',$user);
         try {
             $credentials['password'] = Hash::make($credentials['password']);
             $credentials['role'] = 'employee';

@@ -22,7 +22,7 @@
                         <th scope="row"><a href="/employee_records_details/{{$record->id}}"> {{$record->id}} </a></th>
                         <td><a href="/employee_records_details/{{$record->id}}">{{$record->title}}</a></td>
                         <td><a href="/employee_records_details/{{$record->id}}"><img style="width: 50px"
-                                                                             src="/{{$record->image_path}}"/></a></td>
+                                                                             src="/storage/{{$record->image_path}}"/></a></td>
                         <td><a href="/categories/{{$record->category_id}}"> {{$record->category->name}} </a></td>
                         <td>
                             <button class="btn btn-danger" onclick="deleteRecord({{$record->id}})"> delete</button>

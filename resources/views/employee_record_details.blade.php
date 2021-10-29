@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <td>Image</td>
-                    <td scope="row"><img style="width: 50px" src="/{{$user_record->image_path}}"/></td>
+                    <td scope="row"><img style="width: 50px" src="/storage/{{$user_record->image_path}}"/></td>
                 </tr>
                 <tr>
                     <td>Category</td>

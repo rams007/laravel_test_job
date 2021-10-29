@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
 
-    Route::get('/employee', [UserController::class, 'getEmployees'])->name('employee');
+    Route::get('/employee', [UserController::class, 'getEmployees'])->name('employee')->middleware('onlyManagerAllowed');
     Route::get('/employee/{userId}', [UserRecordsController::class, 'getEmployeeRecords']);
     Route::post('/employee', [UserController::class, 'createEmployee']);
     Route::delete('/employee/{user}', [UserController::class, 'deleteEmployee']);

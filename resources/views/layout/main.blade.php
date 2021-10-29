@@ -14,7 +14,7 @@
 <body>
 <header>
     <nav class="bg-dark fixed-top navbar navbar-dark navbar-expand-md">
-        <div class="container-fluid"><a class="navbar-brand" href="#">Sidebar navigation</a>
+        <div class="container-fluid"><a class="navbar-brand" href="#">Test job on laravel</a>
             <button class="border-0 btn btn-link navbar-toggler" type="button" id="sidebar"
                     aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         </div>
@@ -38,13 +38,14 @@
                                 Employee
                             </a>
                         </li>
-                        <li>
-                            <a class="{{ (Request::routeIs('categories') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
-                               href="/categories">
-                                Categories
-                            </a>
-                        </li>
                     @endif
+                   <!-- <li>
+                        <a class="{{ (Request::routeIs('categories') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
+                           href="/categories">
+                            Categories
+                        </a>
+                    </li>
+-->
                     <li>
                         <a class="{{ (Request::routeIs('employee_records') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
                            href="/employee_records">

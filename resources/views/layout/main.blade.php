@@ -39,13 +39,6 @@
                             </a>
                         </li>
                     @endif
-                   <!-- <li>
-                        <a class="{{ (Request::routeIs('categories') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
-                           href="/categories">
-                            Categories
-                        </a>
-                    </li>
--->
                     <li>
                         <a class="{{ (Request::routeIs('employee_records') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
                            href="/employee_records">

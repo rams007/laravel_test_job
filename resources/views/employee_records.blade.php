@@ -101,12 +101,12 @@
 
 @section('scripts')
     <script>
-
+        let employeeRecordsUrl = '{{route('employee_records')}}';
 
         function deleteRecord(recordId) {
             console.log(recordId);
             $.ajax({
-                url: window.location.pathname + '/' + recordId,
+                url: employeeRecordsUrl + '/' + recordId,
                 type: 'DELETE',
                 data: {_token: $('[name=_token]').val()}
             }).done(function (data) {
@@ -145,7 +145,7 @@
 
             $.ajax({
                 type: "POST",
-                url: window.location.pathname,
+                url: employeeRecordsUrl,
 
                 success: function (data) {
                     console.log(data);
@@ -183,7 +183,7 @@
 
         function editRecord(recordId) {
             $.ajax({
-                url: window.location.pathname + '/' + recordId,
+                url: employeeRecordsUrl + '/' + recordId,
                 type: 'GET',
             }).done(function (data) {
                 console.log(data);

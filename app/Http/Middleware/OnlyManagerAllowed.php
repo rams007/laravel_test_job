@@ -20,10 +20,7 @@ class OnlyManagerAllowed
         if(Auth::user()->role!=='manager'){
             return redirect('/');
         }else{
-
             return $next($request);
         }
-
-
     }
 }

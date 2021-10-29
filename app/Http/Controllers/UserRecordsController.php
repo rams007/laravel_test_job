@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\UserRecord;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 

@@ -101,7 +101,11 @@
                 }
             }).fail(function (error) {
                 console.log(error);
-                toastr.warning('Problem with your request ');
+                if (error.status === 403) {
+                    toastr.warning('This action is unauthorized.');
+                } else {
+                    toastr.warning('Problem with your request ');
+                }
             });
         }
 

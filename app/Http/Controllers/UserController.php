@@ -29,7 +29,7 @@ class UserController extends Controller
             Auth::login($user);
             return redirect('/');
         } catch (\Throwable $e) {
-            Log::error('We got error when user attemp to register ' . $e->getMessage());
+            Log::error('We got error when user attempt to register ' . $e->getMessage());
             return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
 
@@ -41,29 +41,32 @@ class UserController extends Controller
      */
     public function getEmployees()
     {
-        $allEmployee = User::where('role', 'employee')->get(['id', 'email']);
+        $user = Auth::user();
+        $allEmployee = User::where('role', 'employee')->where('manager_id', $user->id)->get(['id', 'email']);
         return view('employees', ['allEmployee' => $allEmployee]);
     }
 
 
     /**
-     * Create new emploee record
+     * Create new employee record
      * @param CreateUserRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function createEmployee(CreateUserRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
+        $user = Auth::user();
         Gate::authorize('create');
         try {
             $credentials['password'] = Hash::make($credentials['password']);
             $credentials['role'] = 'employee';
             $credentials['name'] = 'John';
+            $credentials['manager_id'] = $user->id;
             User::create($credentials);
 
             return response()->json(['error' => false, 'msg' => 'User created']);
         } catch (\Throwable $e) {
-            Log::error('We got error when user attemp to register ' . $e->getMessage());
+            Log::error('We got error when user attempt to register ' . $e->getMessage());
             return response()->json(['error' => true, 'msg' => $e->getMessage()]);
         }
     }
@@ -76,6 +79,7 @@ class UserController extends Controller
     public function deleteEmployee(User $user)
     {
         if ($user) {
+            Gate::authorize('delete', $user);
             if ($user->role == 'employee') {
                 $user->delete();
                 return response()->json(['error' => false, 'msg' => 'User deleted']);
@@ -116,11 +120,8 @@ class UserController extends Controller
     public function logoutUser(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
 }

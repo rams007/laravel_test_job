@@ -11,12 +11,11 @@ class UserRecordsPolicy
     use HandlesAuthorization;
 
 
-
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\UserRecord  $userRecord
+     * @param \App\Models\User $user
+     * @param \App\Models\UserRecord $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user, UserRecord $userRecord)
@@ -35,8 +34,8 @@ class UserRecordsPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\UserRecord  $userRecord
+     * @param \App\Models\User $user
+     * @param \App\Models\UserRecord $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, UserRecord $userRecord)
@@ -47,7 +46,13 @@ class UserRecordsPolicy
         }
 
         if ($user->role == 'manager') {
-            $allow = true;
+            //only manager assigned to this employee can delete records
+            $employeeUserRecord = User::find($userRecord->user_id);
+            if ($employeeUserRecord) {
+                if ($employeeUserRecord->manager_id == $user->id) {
+                    $allow = true;
+                }
+            }
         }
         return $allow;
     }

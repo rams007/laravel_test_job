@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\UserRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +23,8 @@ class UserRecordsController extends Controller
     {
         $user = Auth::user();
         if ($user->role == 'manager') {
-            $allEmployeeRecords = UserRecord::whereNotNull('image_path')->paginate(10);
+            $allEmployeeRecords = UserRecord::whereNotNull('image_path')->leftJoin('users', 'users.id', '=', 'user_records.user_id')
+                ->where('users.manager_id', $user->id)->paginate(10);
         } else {
             $allEmployeeRecords = UserRecord::where('user_id', $user->id)->paginate(10);
         }
@@ -108,7 +110,8 @@ class UserRecordsController extends Controller
     {
         $user = Auth::user();
         if ($user->role == 'manager') {
-            $allEmployeeRecords = UserRecord::whereNotNull('image_path')->where('category_id', $categoryId)->paginate(10);
+            $allEmployeeRecords = UserRecord::whereNotNull('image_path')->leftJoin('users', 'users.id', '=', 'user_records.user_id')
+                ->where('users.manager_id', $user->id)->where('category_id', $categoryId)->paginate(10);
         } else {
             $allEmployeeRecords = UserRecord::where('user_id', $user->id)->where('category_id', $categoryId)->paginate(10);
         }
@@ -129,6 +132,11 @@ class UserRecordsController extends Controller
         return view('employee_records', ['allEmployeeRecords' => $allEmployeeRecords, 'allCategories' => $allCategories]);
     }
 
+    /**
+     * Get single employee record
+     * @param $user_record
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getRecord($user_record)
     {
         $employeeRecord = UserRecord::find($user_record);

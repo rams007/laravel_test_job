@@ -28,7 +28,8 @@
                 </tr>
                 <tr>
                     <td>Author</td>
-                    <td scope="row"><a href="/employee/{{$user_record->user_id}}"> {{$user_record->author->email}}</a>
+
+                    <td scope="row"><a href="/employee/{{$user_record->user_id}}"> {{$user_record->user->email}}</a>
                     </td>
                 </tr>
                 </tbody>

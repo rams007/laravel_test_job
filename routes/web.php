@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/categories/{categoryId}', [UserRecordsController::class, 'getRecordsByCategory'])->name('categories');
 
     Route::get('/employee_records', [UserRecordsController::class, 'getRecords'])->name('employee_records');
-    Route::get('/employee_records/{user_record}', [UserRecordsController::class, 'showRecord']);
+    Route::get('/employee_records_details/{user_record}', [UserRecordsController::class, 'showRecord']);
     Route::post('/employee_records', [UserRecordsController::class, 'createRecord']);
     Route::delete('/employee_records/{user_record}', [UserRecordsController::class, 'deleteRecord']);
     Route::get('/employee_records/{user_record}', [UserRecordsController::class, 'getRecord']);

@@ -95,7 +95,6 @@ class UserRecordsController extends Controller
      */
     public function showRecord(UserRecord $user_record)
     {
-        $user_record->author = User::find($user_record->user_id);
         return view('employee_record_details', ['user_record' => $user_record]);
     }
 

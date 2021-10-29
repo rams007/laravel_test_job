@@ -96,4 +96,16 @@ class UserRecordsController extends Controller
         $allCategories = Category::all(['id', 'name']);
         return view('categories', ['allEmployeeRecords' => $allEmployeeRecords, 'allCategories' => $allCategories]);
     }
+
+    /**
+     * Give all records for given employee id
+     * @param $userId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function getEmployeeRecords($userId)
+    {
+        $allEmployeeRecords = UserRecord::where('user_id', $userId)->paginate(10);
+        $allCategories = Category::all(['id', 'name']);
+        return view('employee_records', ['allEmployeeRecords' => $allEmployeeRecords, 'allCategories' => $allCategories]);
+    }
 }

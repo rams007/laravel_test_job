@@ -99,7 +99,7 @@
         function deleteRecord(recordId) {
             console.log(recordId);
             $.ajax({
-                url: $(location).attr('href') + '/' + recordId,
+                url: window.location.pathname + '/' + recordId,
                 type: 'DELETE',
                 data: {_token: $('[name=_token]').val()}
             }).done(function (data) {
@@ -133,7 +133,7 @@
 
             $.ajax({
                 type: "POST",
-                url: $(location).attr('href'),
+                url: window.location.pathname,
 
                 success: function (data) {
                     console.log(data);

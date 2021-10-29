@@ -23,15 +23,14 @@
                 </tr>
                 <tr>
                     <td>Category</td>
-                    <td scope="row"><a href="/categories/{{$record->category_id}}"> {{$user_record->category->name}} </a></td>
+                    <td scope="row"><a
+                            href="/categories/{{$user_record->category_id}}"> {{$user_record->category->name}} </a></td>
                 </tr>
-
                 <tr>
                     <td>Author</td>
-                    <td scope="row">{{$user_record->author->email}}</td>
+                    <td scope="row"><a href="/employee/{{$user_record->user_id}}"> {{$user_record->author->email}}</a>
+                    </td>
                 </tr>
-
-
                 </tbody>
             </table>
 

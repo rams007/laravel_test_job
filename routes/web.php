@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/employee', [UserController::class, 'getEmployees'])->name('employee');
+    Route::get('/employee/{userId}', [UserRecordsController::class, 'getEmployeeRecords']);
     Route::post('/employee', [UserController::class, 'createEmployee']);
     Route::delete('/employee/{user}', [UserController::class, 'deleteEmployee']);
 

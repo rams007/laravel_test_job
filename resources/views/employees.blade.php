@@ -88,7 +88,7 @@
         function deleteEmployee(employeeId) {
             console.log(employeeId);
             $.ajax({
-                url: $(location).attr('href') + '/' + employeeId,
+                url: window.location.pathname + '/' + employeeId,
                 type: 'DELETE',
                 data: {_token: $('[name=_token]').val()}
             }).done(function (data) {
@@ -117,7 +117,7 @@
             };
             console.log(postData);
 
-            $.post($(location).attr('href'), postData)
+            $.post(window.location.pathname, postData)
                 .done(function (data) {
                     console.log(data);
                     if (data.error === false) {

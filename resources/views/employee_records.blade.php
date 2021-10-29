@@ -116,7 +116,11 @@
                 }
             }).fail(function (error) {
                 console.log(error);
-                toastr.warning('Problem with your request ');
+                if (error.status === 403) {
+                    toastr.warning('This action is unauthorized.');
+                } else {
+                    toastr.warning('Problem with your request ');
+                }
             });
         }
 
@@ -144,21 +148,25 @@
                     console.log(data);
                     if (data.error === false) {
                         toastr.success(data.msg);
-                        window.location.reload();
+                        //            window.location.reload();
                     } else {
                         toastr.warning(data.msg);
                     }
                 },
                 error: function (error) {
                     console.log(error);
-                    if (error.responseJSON !== undefined) {
-                        let responseText = error.responseJSON;
-                        let problemField = Object.keys(responseText.errors)[0];
-                        let errorMsg = responseText.errors[problemField][0];
-                        console.log(errorMsg);
-                        toastr.warning('Problem with ' + problemField, errorMsg);
+                    if (error.status === 403) {
+                        toastr.warning('This action is unauthorized.');
                     } else {
-                        toastr.warning('Problem with your request ');
+                        if (error.responseJSON !== undefined) {
+                            let responseText = error.responseJSON;
+                            let problemField = Object.keys(responseText.errors)[0];
+                            let errorMsg = responseText.errors[problemField][0];
+                            console.log(errorMsg);
+                            toastr.warning('Problem with ' + problemField, errorMsg);
+                        } else {
+                            toastr.warning('Problem with your request ');
+                        }
                     }
                 },
 

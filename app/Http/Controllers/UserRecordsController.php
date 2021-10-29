@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\UserRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class UserRecordsController extends Controller
@@ -51,6 +52,7 @@ class UserRecordsController extends Controller
             }
         } else {
             $savedUserRecord = UserRecord::find($request->id);
+            Gate::authorize('update', $savedUserRecord);
             if (!$savedUserRecord) {
                 return response()->json(['error' => true, 'msg' => 'Record not found']);
             } else {
@@ -75,6 +77,7 @@ class UserRecordsController extends Controller
     public function deleteRecord(UserRecord $user_record)
     {
         if ($user_record) {
+            Gate::authorize('delete', $user_record);
             Storage::disk('public')->delete($user_record->image_path);
             $user_record->delete();
             return response()->json(['error' => false, 'msg' => 'User record deleted']);

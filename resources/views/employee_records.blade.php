@@ -56,6 +56,7 @@
                 <div class="modal-body">
                     <form in="createEmployee">
                         {{csrf_field()}}
+                        <input type="hidden" id="recordId">
                         <div class="row">
                             <div class="mb-3">
                                 <label for="recordTitle" class="form-label">Title</label>
@@ -72,6 +73,9 @@
                                 </select>
                             </div>
 
+                            <div class="mb-3" id="preview" style="display: none">
+                                <img id="previewImage" style="    max-height: 150px;">
+                            </div>
                             <div class="mb-3">
                                 <label for="categoryFile" class="form-label">Please select image </label>
                                 <input class="form-control" type="file" id="formFile" accept="image/*">
@@ -124,6 +128,7 @@
 
             // add assoc key values, this will be posts values
             formData.append("image", $('#formFile')[0].files[0]);
+            formData.append("id", $('#recordId').val());
             formData.append("title", $('#recordTitle').val());
             formData.append("category_id", $('#recordCategory').val());
             formData.append("_token", $('[name=_token]').val());
@@ -163,7 +168,30 @@
                 processData: false,
                 timeout: 60000
             });
+        }
 
+        function editRecord(recordId) {
+            $.ajax({
+                url: window.location.pathname + '/' + recordId,
+                type: 'GET',
+            }).done(function (data) {
+                console.log(data);
+                if (data.error === false) {
+                    $('#preview').show();
+                    $('#recordTitle').val(data.data.title);
+                    $('#recordCategory').val(data.data.category_id);
+                    $('#recordId').val(data.data.id);
+                    $('#previewImage').attr('src', '/' + data.data.image_path);
+
+                    var myModal = new bootstrap.Modal(document.getElementById('createNewRecordModal'), {})
+                    myModal.show()
+                } else {
+                    toastr.warning(data.msg);
+                }
+            }).fail(function (error) {
+                console.log(error);
+                toastr.warning('Problem with your request ');
+            });
 
         }
 

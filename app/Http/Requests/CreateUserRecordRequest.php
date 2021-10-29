@@ -25,7 +25,7 @@ class CreateUserRecordRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'image' => 'required|file',
+            // 'image' => 'required|file',
             'category_id' => 'required|integer'
         ];
     }

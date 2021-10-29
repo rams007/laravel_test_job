@@ -31,7 +31,7 @@ class UserRecordsController extends Controller
     }
 
     /**
-     * Create new record
+     * Create new record or update existed
      * @param CreateUserRecordRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -39,15 +39,32 @@ class UserRecordsController extends Controller
     {
         $user = Auth::user();
         $userRecord = $request->only(['title', 'category_id']);
-        if ($request->file('image')->isValid()) {
-            $path = $request->image->store('images', 'public');
-            $userRecord['image_path'] = $path;
-            $userRecord['user_id'] = $user->id;
-            UserRecord::create($userRecord);
-            return response()->json(['error' => false, 'msg' => 'Saved']);
+        if (empty($request->id)) {
+            if ($request->file('image')->isValid()) {
+                $path = $request->image->store('images', 'public');
+                $userRecord['image_path'] = $path;
+                $userRecord['user_id'] = $user->id;
+                UserRecord::create($userRecord);
+                return response()->json(['error' => false, 'msg' => 'Saved']);
+            } else {
+                return response()->json(['error' => true, 'msg' => 'File invalid']);
+            }
         } else {
-            return response()->json(['error' => true, 'msg' => 'File invalid']);
+            $savedUserRecord = UserRecord::find($request->id);
+            if (!$savedUserRecord) {
+                return response()->json(['error' => true, 'msg' => 'Record not found']);
+            } else {
+                $savedUserRecord->title = $userRecord['title'];
+                $savedUserRecord->category_id = $userRecord['category_id'];
+                if ($request->file('image') !== null AND $request->file('image')->isValid()) {
+                    $path = $request->image->store('images', 'public');
+                    $savedUserRecord->image_path = $path;
+                }
+                $savedUserRecord->save();
+                return response()->json(['error' => false, 'msg' => 'Saved']);
+            }
         }
+
     }
 
     /**
@@ -107,5 +124,15 @@ class UserRecordsController extends Controller
         $allEmployeeRecords = UserRecord::where('user_id', $userId)->paginate(10);
         $allCategories = Category::all(['id', 'name']);
         return view('employee_records', ['allEmployeeRecords' => $allEmployeeRecords, 'allCategories' => $allCategories]);
+    }
+
+    public function getRecord($user_record)
+    {
+        $employeeRecord = UserRecord::find($user_record);
+        if ($employeeRecord) {
+            return response()->json(['error' => false, 'data' => $employeeRecord]);
+        } else {
+            return response()->json(['error' => true, 'msg' => 'Record not found']);
+        }
     }
 }

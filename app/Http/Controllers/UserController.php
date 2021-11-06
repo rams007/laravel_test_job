@@ -24,7 +24,6 @@ class UserController extends Controller
         try {
             $credentials['password'] = Hash::make($credentials['password']);
             $credentials['role'] = 'manager';
-            $credentials['name'] = 'John';
             $user = User::create($credentials);
             Auth::login($user);
             return redirect('/');
@@ -60,7 +59,6 @@ class UserController extends Controller
         try {
             $credentials['password'] = Hash::make($credentials['password']);
             $credentials['role'] = 'employee';
-            $credentials['name'] = 'John';
             $credentials['manager_id'] = $user->id;
             User::create($credentials);
 

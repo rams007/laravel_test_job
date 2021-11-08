@@ -13,26 +13,6 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    /**
-     * Create  user manager instance
-     * @param CreateUserRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function createUser(CreateUserRequest $request)
-    {
-        $credentials = $request->only(['email', 'password']);
-        try {
-            $credentials['password'] = Hash::make($credentials['password']);
-            $credentials['role'] = 'manager';
-            $user = User::create($credentials);
-            Auth::login($user);
-            return redirect('/');
-        } catch (\Throwable $e) {
-            Log::error('We got error when user attempt to register ' . $e->getMessage());
-            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
-        }
-
-    }
 
     /**
      * Get list of all existed employees
@@ -89,37 +69,4 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Login users
-     * @param LoginUserRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function loginUser(LoginUserRequest $request)
-    {
-        $credentials = $request->only(['email', 'password']);
-        if (Auth::attempt($credentials)) {
-
-            $request->session()->regenerate();
-
-            return redirect()->intended('/');
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
-
-
-    /**
-     * Log the user out of the application.
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function logoutUser(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login');
-    }
 }

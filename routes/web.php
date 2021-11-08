@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 Use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRecordsController;
@@ -22,9 +23,9 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
-Route::post('/register', [UserController::class, 'createUser']);
-Route::post('/login', [UserController::class, 'loginUser']);
-Route::get('/logout', [UserController::class, 'logoutUser']);
+Route::post('/register', [AuthController::class, 'createUser']);
+Route::post('/login', [AuthController::class, 'loginUser']);
+Route::get('/logout', [AuthController::class, 'logoutUser']);
 
 Route::middleware(['auth'])->group(function () {
 

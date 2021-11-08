@@ -26,9 +26,9 @@
                 @foreach($allEmployeeRecords as $record)
 
                     <tr>
-                        <th scope="row"><a href="/employee_records_details/{{$record->id}}"> {{$record->id}} </a></th>
-                        <td><a href="/employee_records_details/{{$record->id}}">{{$record->title}}</a></td>
-                        <td><a href="/employee_records_details/{{$record->id}}"><img style="width: 50px"
+                        <th scope="row"><a href="/employee/records/details/{{$record->id}}"> {{$record->id}} </a></th>
+                        <td><a href="/employee/records/details/{{$record->id}}">{{$record->title}}</a></td>
+                        <td><a href="/employee/records/details/{{$record->id}}"><img style="width: 50px"
                                                                                      src="/storage/{{$record->image_path}}"/></a>
                         </td>
                         <td><a href="/categories/{{$record->category_id}}"> {{$record->category->name}} </a></td>

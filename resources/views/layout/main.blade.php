@@ -41,7 +41,7 @@
                     @endif
                     <li>
                         <a class="{{ (Request::routeIs('employee_records') ? 'nav-link link-dark active' : 'nav-link link-dark ') }}"
-                           href="/employee_records">
+                           href="/employee/records">
                             Employee records
                         </a>
                     </li>

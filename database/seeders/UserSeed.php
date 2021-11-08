@@ -26,5 +26,18 @@ class UserSeed extends Seeder
             'password'=>Hash::make('123456'),
             'manager_id'=>$userManager->id
         ]);
+
+        $userManager= User::create([
+            'email'=>'test_1@gmail.com',
+            'role'=>'manager',
+            'password'=>Hash::make('123456')
+        ]);
+
+        User::create([
+            'email'=>'test_employee_1@gmail.com',
+            'password'=>Hash::make('123456'),
+            'manager_id'=>$userManager->id
+        ]);
+
     }
 }

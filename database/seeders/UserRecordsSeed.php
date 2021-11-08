@@ -15,7 +15,7 @@ class UserRecordsSeed extends Seeder
      */
     public function run()
     {
-        $userManager = User::whereNotNull('manager_id')->first();
+        $userManager = User::where('email','test_employee@gmail.com')->first();
         UserRecord::create([
             'user_id' => $userManager->id,
             'title' => 'Test 1',
@@ -25,6 +25,20 @@ class UserRecordsSeed extends Seeder
         UserRecord::create([
             'user_id' => $userManager->id,
             'title' => 'Test 2',
+            'image_path' => '/images/TI0shcWOGf2PLOF6YbOVaRHGdXtDsVUTTkAKoi8P.png',
+            'category_id' => 1
+        ]);
+
+        $userManager = User::where('email','test_employee_1@gmail.com')->first();
+        UserRecord::create([
+            'user_id' => $userManager->id,
+            'title' => 'Test 3',
+            'image_path' => '/images/TI0shcWOGf2PLOF6YbOVaRHGdXtDsVUTTkAKoi8P.png',
+            'category_id' => 1
+        ]);
+        UserRecord::create([
+            'user_id' => $userManager->id,
+            'title' => 'Test 4',
             'image_path' => '/images/TI0shcWOGf2PLOF6YbOVaRHGdXtDsVUTTkAKoi8P.png',
             'category_id' => 1
         ]);

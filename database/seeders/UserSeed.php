@@ -17,6 +17,7 @@ class UserSeed extends Seeder
     {
        $userManager= User::create([
             'email'=>'test@gmail.com',
+            'role'=>'manager',
             'password'=>Hash::make('123456')
         ]);
 

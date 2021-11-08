@@ -20,7 +20,7 @@ class CreateUserRecordsTable extends Migration
             $table->string('image_path');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->index('user_id');
             $table->timestamps();
         });
